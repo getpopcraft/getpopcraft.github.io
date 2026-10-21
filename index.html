@@ -1,0 +1,173 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>PopCraft Open Source</title>
+  <meta name="description" content="PopCraft's open-source tools: the CLI, the plugin SDK, the npm packages' examples and Foldable Sim." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --ink: #111014; --paper: #fffdf3; --sun: #ffe14a; --pop: #ff3d8b; --sky: #4ad7ff; --mint: #5ef2a8; --grape: #8b5cff;
+      --muted: #5b5866; --card: #ffffff; --line: #111014;
+      font-family: "Bricolage Grotesque", ui-sans-serif, system-ui, sans-serif;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root { --ink: #f6f3ff; --paper: #141218; --card: #1d1a23; --muted: #a8a3b5; --line: #000; }
+    }
+    * { box-sizing: border-box; }
+    body { margin: 0; background: var(--paper); color: var(--ink); line-height: 1.5; }
+    a { color: inherit; }
+    .wrap { max-width: 1120px; margin: 0 auto; padding: 0 16px; }
+
+    header.hero {
+      background: var(--sun) repeating-conic-gradient(from 0deg at 50% 120%, #ffd21f 0 6deg, var(--sun) 6deg 12deg);
+      color: #111014; border-bottom: 4px solid #111014; padding: 56px 0 64px;
+    }
+    .brand { display: inline-flex; align-items: center; gap: 10px; font-weight: 800; text-decoration: none; font-size: 18px; }
+    .brand b { background: #111014; color: var(--sun); padding: 2px 10px; border-radius: 8px; transform: rotate(-3deg); display: inline-block; }
+    h1 { font-size: clamp(40px, 7vw, 76px); line-height: 0.95; margin: 28px 0 16px; letter-spacing: -0.02em; font-weight: 800; }
+    h1 em { font-style: normal; color: var(--pop); -webkit-text-stroke: 2px #111014; paint-order: stroke fill; }
+    .lede { font-size: 20px; max-width: 640px; margin: 0 0 28px; }
+    .quick { display: grid; gap: 12px; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); max-width: 820px; }
+
+    .cmd {
+      display: flex; align-items: center; gap: 10px; background: #111014; color: #f6f3ff; border-radius: 12px;
+      padding: 10px 10px 10px 14px; font: 14px/1.4 "JetBrains Mono", ui-monospace, monospace; box-shadow: 4px 4px 0 var(--pop);
+      min-width: 0;
+    }
+    .cmd code { flex: 1; overflow-x: auto; white-space: nowrap; }
+    .cmd code::before { content: "$ "; color: var(--mint); }
+    .cmd small { display: block; color: #a8a3b5; font-size: 11px; font-family: "Bricolage Grotesque", sans-serif; }
+    .copy {
+      flex: none; border: 0; border-radius: 8px; padding: 6px 10px; background: #2b2833; color: #f6f3ff; font: 600 12px "JetBrains Mono", monospace; cursor: pointer;
+    }
+    .copy:hover { background: var(--sun); color: #111014; }
+
+    main { padding: 56px 0 24px; }
+    h2 { font-size: 32px; margin: 0 0 6px; letter-spacing: -0.01em; }
+    .sub { color: var(--muted); margin: 0 0 28px; }
+    .grid { display: grid; gap: 22px; grid-template-columns: repeat(auto-fit, minmax(min(100%, 340px), 1fr)); }
+    .card {
+      background: var(--card); border: 3px solid var(--line); border-radius: 18px; padding: 22px; display: flex; flex-direction: column; gap: 14px;
+      box-shadow: 6px 6px 0 var(--accent); transition: transform .15s, box-shadow .15s; min-width: 0;
+    }
+    .card:hover { transform: translate(-2px, -2px); box-shadow: 9px 9px 0 var(--accent); }
+    .card h3 { margin: 0; font-size: 24px; display: flex; align-items: center; gap: 10px; }
+    .card h3 .tag { font: 600 11px "JetBrains Mono", monospace; text-transform: uppercase; letter-spacing: .08em; background: var(--accent); color: #111014; border-radius: 999px; padding: 3px 9px; }
+    .card p { margin: 0; color: var(--muted); }
+    .card ul { margin: 0; padding-inline-start: 18px; color: var(--muted); }
+    .card li { margin: 2px 0; }
+    .links { display: flex; flex-wrap: wrap; gap: 8px; margin-top: auto; }
+    .btn {
+      text-decoration: none; font-weight: 800; font-size: 14px; border: 2px solid var(--line); border-radius: 10px; padding: 7px 12px; background: var(--card);
+    }
+    .btn.primary { background: var(--accent); color: #111014; }
+    .btn:hover { filter: brightness(0.95); }
+
+    .help { margin-top: 56px; display: grid; gap: 16px; grid-template-columns: repeat(auto-fit, minmax(min(100%, 240px), 1fr)); }
+    .help a { display: block; text-decoration: none; border: 2px dashed var(--muted); border-radius: 14px; padding: 16px; }
+    .help a:hover { border-style: solid; border-color: var(--pop); }
+    .help strong { display: block; font-size: 17px; }
+    .help span { color: var(--muted); font-size: 14px; }
+    footer { padding: 40px 0 56px; color: var(--muted); font-size: 14px; }
+  </style>
+</head>
+<body>
+  <header class="hero">
+    <div class="wrap">
+      <a class="brand" href="https://popcraft.app"><b>PopCraft</b> on GitHub</a>
+      <h1>Open source tools for <em>making things pop</em>.</h1>
+      <p class="lede">Script designs from the command line, build plugins for the editor, start from working examples, and test layouts on foldables. Everything here is MIT licensed.</p>
+      <div class="quick">
+        <div class="cmd"><code>brew install getpopcraft/popcraft/popcraft</code><button class="copy" type="button">Copy</button></div>
+        <div class="cmd"><code>npm i -D @popcraft/plugins</code><button class="copy" type="button">Copy</button></div>
+      </div>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <h2>Projects</h2>
+    <p class="sub">Pick the one that matches what you're building.</p>
+    <div class="grid">
+
+      <article class="card" style="--accent: var(--sun)">
+        <h3>PopCraft CLI <span class="tag">Command line</span></h3>
+        <p>Edit <code>.popcraft</code> files without opening the app, call the REST API, and publish to the marketplace. Good for CI and batch jobs.</p>
+        <div class="cmd"><code>brew install getpopcraft/popcraft/popcraft</code><button class="copy" type="button">Copy</button></div>
+        <div class="cmd"><code>npm i -g @popcraft/cli</code><button class="copy" type="button">Copy</button></div>
+        <div class="links">
+          <a class="btn primary" href="https://popcraft.app/docs/api/cli">CLI docs</a>
+          <a class="btn" href="https://github.com/getpopcraft/homebrew-popcraft">Homebrew tap</a>
+        </div>
+      </article>
+
+      <article class="card" style="--accent: var(--pop)">
+        <h3>Plugin SDK <span class="tag">Extend the editor</span></h3>
+        <p>The <code>popcraft</code> API and types for plugins, widgets, themes, brushes, shaders and templates, with one working example of each.</p>
+        <div class="cmd"><code>npm i -D @popcraft/plugins</code><button class="copy" type="button">Copy</button></div>
+        <ul>
+          <li><b>arrange-grid</b>: commands, a UI and storage</li>
+          <li><b>contrast-checker</b>: WCAG checks over the selection</li>
+          <li><b>storefront-preview</b>: a new File › Export format</li>
+        </ul>
+        <div class="links">
+          <a class="btn primary" href="https://github.com/getpopcraft/plugins">Code &amp; examples</a>
+          <a class="btn" href="https://popcraft.app/docs/plugins">Plugin guide</a>
+        </div>
+      </article>
+
+      <article class="card" style="--accent: var(--mint)">
+        <h3>Examples <span class="tag">Start here</span></h3>
+        <p>Small, complete projects for <code>@popcraft/kit</code>, <code>@popcraft/cli</code> and <code>@popcraft/runtime</code>, checked weekly against the latest releases.</p>
+        <ul>
+          <li>25 templates in every format, from launch films to email</li>
+          <li>Social cards generated from a JSON file of events</li>
+          <li>A CI gate that fails on unreadable or too-small text</li>
+          <li>Next.js Commerce drawn by a PopCraft design</li>
+        </ul>
+        <div class="cmd"><code>git clone https://github.com/getpopcraft/examples</code><button class="copy" type="button">Copy</button></div>
+        <div class="links">
+          <a class="btn primary" href="https://github.com/getpopcraft/examples">Browse examples</a>
+          <a class="btn" href="https://popcraft.app/docs/api/packages">Package docs</a>
+        </div>
+      </article>
+
+      <article class="card" style="--accent: var(--sky)">
+        <h3>Foldable Sim <span class="tag">Testing</span></h3>
+        <p>Test any web app's responsive and foldable layouts in your browser: iPhone, iPad, MacBook, and the iPhone Duo closed, half open and open.</p>
+        <ul>
+          <li>Paste a URL; switch device, posture and rotation</li>
+          <li>Your app gets the hinge and crease as CSS attributes and variables</li>
+          <li>Includes a Tailwind example with fold variants</li>
+        </ul>
+        <div class="links">
+          <a class="btn primary" href="https://getpopcraft.github.io/foldable-sim/">Open the simulator</a>
+          <a class="btn" href="https://github.com/getpopcraft/foldable-sim">Code</a>
+        </div>
+      </article>
+
+    </div>
+
+    <div class="help">
+      <a href="https://popcraft.app"><strong>Try PopCraft →</strong><span>The design tool, in your browser or on the desktop</span></a>
+      <a href="https://popcraft.app/docs"><strong>Read the docs →</strong><span>Guides for the app, the API and exports</span></a>
+      <a href="https://popcraft.app/docs/api/agents"><strong>Design with an AI agent →</strong><span>Drive PopCraft from your coding agent</span></a>
+      <a href="https://github.com/getpopcraft"><strong>All repositories →</strong><span>Issues and pull requests welcome</span></a>
+    </div>
+  </main>
+
+  <footer class="wrap">MIT licensed · © PopCraft · <a href="https://popcraft.app">popcraft.app</a></footer>
+
+  <script>
+    for (const b of document.querySelectorAll('.copy')) {
+      b.addEventListener('click', async () => {
+        const text = b.previousElementSibling.textContent
+        try { await navigator.clipboard.writeText(text); b.textContent = 'Copied' } catch { b.textContent = 'Select' }
+        setTimeout(() => { b.textContent = 'Copy' }, 1500)
+      })
+    }
+  </script>
+</body>
+</html>
